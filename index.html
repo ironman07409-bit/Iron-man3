@@ -1,0 +1,2346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prit's Café - Where Every Sip Tells a Story</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c1810;
+            --secondary: #8b5e3c;
+            --accent: #d4a574;
+            --cream: #fdf6ee;
+            --warm: #f5e6d3;
+            --gold: #c8956c;
+            --dark: #1a0f0a;
+            --text: #3d2b1f;
+            --light-text: #6b5344;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text);
+            background: var(--cream);
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--cream);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--secondary);
+            border-radius: 4px;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            transition: all 0.4s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(44, 24, 16, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 12px 0;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+        }
+
+        .nav-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--accent), var(--gold));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+        }
+
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .logo-text span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 35px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: rgba(255,255,255,0.85);
+            font-weight: 400;
+            font-size: 15px;
+            transition: all 0.3s;
+            position: relative;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, var(--accent), var(--gold));
+            color: white !important;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all 0.3s !important;
+            box-shadow: 0 4px 15px rgba(212, 165, 116, 0.3);
+        }
+
+        .nav-btn::after {
+            display: none !important;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(212, 165, 116, 0.5) !important;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 28px;
+            height: 2px;
+            background: white;
+            transition: all 0.3s;
+            border-radius: 2px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, rgba(26, 15, 10, 0.85), rgba(44, 24, 16, 0.75)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900"><rect fill="%231a0f0a" width="1440" height="900"/></svg>');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(139, 94, 60, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(212, 165, 116, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 60% 80%, rgba(200, 149, 108, 0.1) 0%, transparent 50%);
+        }
+
+        .hero-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(212, 165, 116, 0.3);
+            border-radius: 50%;
+            animation: float-particle linear infinite;
+        }
+
+        @keyframes float-particle {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+        }
+
+        .hero-content {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            width: 100%;
+        }
+
+        .hero-left {
+            animation: fadeInLeft 1s ease forwards;
+        }
+
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(212, 165, 116, 0.15);
+            border: 1px solid rgba(212, 165, 116, 0.3);
+            padding: 8px 20px;
+            border-radius: 50px;
+            color: var(--accent);
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 68px;
+            font-weight: 800;
+            color: white;
+            line-height: 1.1;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--accent), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero h1 .script {
+            font-family: 'Dancing Script', cursive;
+            font-size: 72px;
+            display: block;
+        }
+
+        .hero p {
+            font-size: 17px;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.8;
+            margin-bottom: 35px;
+            max-width: 500px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--gold));
+            color: white;
+            padding: 15px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            box-shadow: 0 8px 30px rgba(212, 165, 116, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(212, 165, 116, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            padding: 15px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .hero-right {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            animation: fadeInRight 1s ease forwards;
+        }
+
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .coffee-cup-container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+        }
+
+        .coffee-cup-art {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cup-glow {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(212, 165, 116, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 1; }
+        }
+
+        .cup-icon {
+            font-size: 180px;
+            color: var(--accent);
+            position: relative;
+            z-index: 2;
+            filter: drop-shadow(0 20px 40px rgba(212, 165, 116, 0.3));
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .steam {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .steam span {
+            position: absolute;
+            width: 3px;
+            height: 30px;
+            background: linear-gradient(to top, rgba(255,255,255,0.3), transparent);
+            border-radius: 50%;
+            animation: steam-rise 2s ease-in-out infinite;
+        }
+
+        .steam span:nth-child(1) { left: -15px; animation-delay: 0s; }
+        .steam span:nth-child(2) { left: 0px; animation-delay: 0.3s; }
+        .steam span:nth-child(3) { left: 15px; animation-delay: 0.6s; }
+
+        @keyframes steam-rise {
+            0% { transform: translateY(0) scaleX(1); opacity: 0; }
+            30% { opacity: 0.5; }
+            100% { transform: translateY(-60px) scaleX(2); opacity: 0; }
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 100px 0;
+        }
+
+        .section-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .section-tag {
+            font-family: 'Dancing Script', cursive;
+            font-size: 22px;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .section-desc {
+            font-size: 16px;
+            color: var(--light-text);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .divider {
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(135deg, var(--accent), var(--gold));
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+
+        /* About Section */
+        .about {
+            background: white;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-image {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            height: 500px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .about-image-inner {
+            text-align: center;
+            color: white;
+        }
+
+        .about-image-inner i {
+            font-size: 120px;
+            color: var(--accent);
+            margin-bottom: 20px;
+            opacity: 0.6;
+        }
+
+        .about-image::after {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 100px;
+            height: 100px;
+            border: 3px solid var(--accent);
+            border-radius: 20px;
+        }
+
+        .about-image::before {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: -20px;
+            width: 100px;
+            height: 100px;
+            border: 3px solid var(--accent);
+            border-radius: 20px;
+        }
+
+        .about-content h3 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 24px;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .about-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .about-content p {
+            color: var(--light-text);
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 15px;
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .about-feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .about-feature-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, rgba(212, 165, 116, 0.15), rgba(200, 149, 108, 0.1));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .about-feature span {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        /* Menu Section */
+        .menu {
+            background: var(--cream);
+        }
+
+        .menu-categories {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+
+        .menu-cat-btn {
+            padding: 10px 28px;
+            border: 1px solid var(--accent);
+            border-radius: 50px;
+            background: transparent;
+            color: var(--secondary);
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .menu-cat-btn:hover,
+        .menu-cat-btn.active {
+            background: linear-gradient(135deg, var(--accent), var(--gold));
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 4px 15px rgba(212, 165, 116, 0.3);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .menu-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            transition: all 0.4s;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.04);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 0;
+            background: linear-gradient(to bottom, var(--accent), var(--gold));
+            transition: height 0.4s;
+            border-radius: 0 0 4px 4px;
+        }
+
+        .menu-card:hover::before {
+            height: 100%;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .menu-card-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, rgba(212, 165, 116, 0.15), rgba(200, 149, 108, 0.08));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            flex-shrink: 0;
+            transition: all 0.3s;
+        }
+
+        .menu-card:hover .menu-card-icon {
+            background: linear-gradient(135deg, var(--accent), var(--gold));
+            color: white;
+        }
+
+        .menu-card-info {
+            flex: 1;
+        }
+
+        .menu-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 8px;
+        }
+
+        .menu-card-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .menu-card-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--gold);
+            white-space: nowrap;
+        }
+
+        .menu-card-desc {
+            font-size: 13px;
+            color: var(--light-text);
+            line-height: 1.6;
+        }
+
+        .menu-card-tags {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .menu-tag {
+            font-size: 11px;
+            padding: 3px 10px;
+            background: var(--warm);
+            color: var(--secondary);
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        /* Specials Section */
+        .specials {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .specials::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at 30% 50%, rgba(212, 165, 116, 0.08) 0%, transparent 50%);
+        }
+
+        .specials .section-title {
+            color: white;
+        }
+
+        .specials .section-desc {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .specials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .special-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.4s;
+            backdrop-filter: blur(10px);
+        }
+
+        .special-card:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-10px);
+            border-color: rgba(212, 165, 116, 0.3);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .special-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--accent), var(--gold));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+            margin: 0 auto 25px;
+            box-shadow: 0 10px 30px rgba(212, 165, 116, 0.3);
+        }
+
+        .special-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            color: white;
+            margin-bottom: 12px;
+        }
+
+        .special-card p {
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .special-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .special-price small {
+            font-size: 14px;
+            color: rgba(255,255,255,0.4);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background: white;
+        }
+
+        .testimonials-slider {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background: var(--cream);
+            border-radius: 20px;
+            padding: 35px;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+        }
+
+        .testimonial-quote {
+            font-size: 50px;
+            color: var(--accent);
+            font-family: 'Playfair Display', serif;
+            line-height: 1;
+            margin-bottom: 10px;
+            opacity: 0.5;
+        }
+
+        .testimonial-text {
+            font-size: 15px;
+            color: var(--light-text);
+            line-height: 1.8;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-stars {
+            color: #f0b429;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .testimonial-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--gold));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .testimonial-name {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 15px;
+        }
+
+        .testimonial-role {
+            font-size: 13px;
+            color: var(--light-text);
+        }
+
+        /* Gallery Section */
+        .gallery {
+            background: var(--warm);
+            padding: 100px 0;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: 250px 250px;
+            gap: 20px;
+        }
+
+        .gallery-item {
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-item i {
+            font-size: 50px;
+            color: var(--accent);
+            opacity: 0.4;
+        }
+
+        .gallery-item:nth-child(1) {
+            grid-column: span 2;
+        }
+
+        .gallery-item:nth-child(4) {
+            grid-row: span 2;
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(44, 24, 16, 0.9), transparent);
+            display: flex;
+            align-items: flex-end;
+            padding: 25px;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .gallery-overlay span {
+            color: white;
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: var(--cream);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .contact-info h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .contact-info > p {
+            color: var(--light-text);
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .contact-detail {
+            display: flex;
+            align-items: start;
+            gap: 20px;
+        }
+
+        .contact-detail-icon {
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, var(--accent), var(--gold));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .contact-detail h4 {
+            font-size: 16px;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .contact-detail p {
+            font-size: 14px;
+            color: var(--light-text);
+            line-height: 1.6;
+        }
+
+        .contact-social {
+            display: flex;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .social-link {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary);
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .social-link:hover {
+            background: linear-gradient(135deg, var(--accent), var(--gold));
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(212, 165, 116, 0.3);
+        }
+
+        .contact-form {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.05);
+        }
+
+        .contact-form h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            color: var(--primary);
+            margin-bottom: 25px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid #e8ddd3;
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            color: var(--text);
+            transition: all 0.3s;
+            background: var(--cream);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.15);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--accent), var(--gold));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 5px;
+        }
+
+        .form-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 165, 116, 0.4);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            padding: 80px 0 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .footer-about .logo {
+            margin-bottom: 20px;
+        }
+
+        .footer-about p {
+            color: rgba(255,255,255,0.5);
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .footer h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            color: white;
+            margin-bottom: 25px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+
+        .footer-hours {
+            list-style: none;
+        }
+
+        .footer-hours li {
+            display: flex;
+            justify-content: space-between;
+            color: rgba(255,255,255,0.5);
+            font-size: 14px;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .footer-hours li span:first-child {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .footer-newsletter input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            background: rgba(255,255,255,0.05);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .footer-newsletter input::placeholder {
+            color: rgba(255,255,255,0.3);
+        }
+
+        .footer-newsletter input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .footer-newsletter button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--accent), var(--gold));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .footer-newsletter button:hover {
+            box-shadow: 0 8px 25px rgba(212, 165, 116, 0.3);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding-top: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .footer-bottom p {
+            color: rgba(255,255,255,0.4);
+            font-size: 13px;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .footer-bottom-links a {
+            color: rgba(255,255,255,0.4);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s;
+        }
+
+        .footer-bottom-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Back to Top */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent), var(--gold));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(212, 165, 116, 0.4);
+            z-index: 999;
+            border: none;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-3px);
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile Nav */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(26, 15, 10, 0.98);
+            z-index: 999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .mobile-menu.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .mobile-menu a {
+            color: white;
+            text-decoration: none;
+            font-size: 22px;
+            font-family: 'Playfair Display', serif;
+            transition: color 0.3s;
+        }
+
+        .mobile-menu a:hover {
+            color: var(--accent);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 52px;
+            }
+
+            .hero h1 .script {
+                font-size: 56px;
+            }
+
+            .specials-grid,
+            .testimonials-slider {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: auto;
+            }
+
+            .gallery-item:nth-child(1) {
+                grid-column: span 1;
+            }
+
+            .gallery-item:nth-child(4) {
+                grid-row: span 1;
+            }
+
+            .gallery-item {
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 30px;
+            }
+
+            .hero h1 {
+                font-size: 42px;
+            }
+
+            .hero h1 .script {
+                font-size: 48px;
+            }
+
+            .hero p {
+                margin: 0 auto 35px;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .coffee-cup-container {
+                width: 250px;
+                height: 250px;
+            }
+
+            .cup-icon {
+                font-size: 120px;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .about-image {
+                height: 350px;
+            }
+
+            .section-title {
+                font-size: 36px;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .specials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .testimonials-slider {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 34px;
+            }
+
+            .hero h1 .script {
+                font-size: 38px;
+            }
+
+            .about-content h2 {
+                font-size: 32px;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .about-features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon"><i class="fas fa-mug-hot"></i></div>
+                <div class="logo-text">Prit's <span>Café</span></div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#specials">Specials</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#testimonials">Reviews</a></li>
+                <li><a href="#contact" class="nav-btn">Reserve Table</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#home" onclick="closeMenu()">Home</a>
+        <a href="#about" onclick="closeMenu()">About</a>
+        <a href="#menu" onclick="closeMenu()">Menu</a>
+        <a href="#specials" onclick="closeMenu()">Specials</a>
+        <a href="#gallery" onclick="closeMenu()">Gallery</a>
+        <a href="#testimonials" onclick="closeMenu()">Reviews</a>
+        <a href="#contact" onclick="closeMenu()">Reserve Table</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-particles" id="particles"></div>
+        <div class="hero-content">
+            <div class="hero-left">
+                <div class="hero-badge">
+                    <i class="fas fa-star"></i> Premium Coffee Experience
+                </div>
+                <h1>
+                    Where Every Sip
+                    <span class="script highlight">Tells a Story</span>
+                </h1>
+                <p>Welcome to Prit's Café — a haven for coffee lovers. We craft every cup with passion, using the finest beans sourced from around the world, in an ambiance that feels like home.</p>
+                <div class="hero-buttons">
+                    <a href="#menu" class="btn-primary">
+                        <i class="fas fa-coffee"></i> Explore Menu
+                    </a>
+                    <a href="#contact" class="btn-secondary">
+                        <i class="fas fa-calendar-alt"></i> Book a Table
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="15">0</div>
+                        <div class="stat-label">Years of Craft</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="50">0</div>
+                        <div class="stat-label">Coffee Blends</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="10000">0</div>
+                        <div class="stat-label">Happy Visitors</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-right">
+                <div class="coffee-cup-container">
+                    <div class="coffee-cup-art">
+                        <div class="cup-glow"></div>
+                        <div class="steam">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <i class="fas fa-mug-hot cup-icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="section-container">
+            <div class="about-grid">
+                <div class="about-image fade-in">
+                    <div class="about-image-inner">
+                        <i class="fas fa-store"></i>
+                        <p style="color: rgba(255,255,255,0.5); font-size: 14px;">Est. 2009 — Prit's Café</p>
+                    </div>
+                </div>
+                <div class="about-content fade-in">
+                    <h3>Our Story</h3>
+                    <h2>A Passion Brewed Into Perfection</h2>
+                    <p>Prit's Café was born from a simple dream — to create a space where people can slow down, savor the moment, and enjoy an exceptional cup of coffee. Founded by Prit in 2009, our café has grown from a small corner shop to a beloved community gathering place.</p>
+                    <p>Every bean we use is ethically sourced from premium farms across Colombia, Ethiopia, and Brazil. Our master roasters bring out the unique character of each blend, ensuring every cup is a masterpiece.</p>
+                    <div class="about-features">
+                        <div class="about-feature">
+                            <div class="about-feature-icon"><i class="fas fa-leaf"></i></div>
+                            <span>Organic Beans</span>
+                        </div>
+                        <div class="about-feature">
+                            <div class="about-feature-icon"><i class="fas fa-hand-holding-heart"></i></div>
+                            <span>Handcrafted Daily</span>
+                        </div>
+                        <div class="about-feature">
+                            <div class="about-feature-icon"><i class="fas fa-globe-americas"></i></div>
+                            <span>Globally Sourced</span>
+                        </div>
+                        <div class="about-feature">
+                            <div class="about-feature-icon"><i class="fas fa-award"></i></div>
+                            <span>Award Winning</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section class="menu" id="menu">
+        <div class="section-container">
+            <div class="section-header fade-in">
+                <div class="section-tag">Discover Our Flavors</div>
+                <h2 class="section-title">Our Signature Menu</h2>
+                <div class="divider"></div>
+                <p class="section-desc">From classic espressos to creative seasonal specialties, every item on our menu is crafted to delight your senses.</p>
+            </div>
+
+            <div class="menu-categories fade-in">
+                <button class="menu-cat-btn active" onclick="filterMenu('all')">All Items</button>
+                <button class="menu-cat-btn" onclick="filterMenu('coffee')">Coffee</button>
+                <button class="menu-cat-btn" onclick="filterMenu('tea')">Tea</button>
+                <button class="menu-cat-btn" onclick="filterMenu('food')">Food</button>
+                <button class="menu-cat-btn" onclick="filterMenu('dessert')">Desserts</button>
+            </div>
+
+            <div class="menu-grid" id="menuGrid">
+                <!-- Coffee Items -->
+                <div class="menu-card fade-in" data-category="coffee">
+                    <div class="menu-card-icon">☕</div>
+                    <div class="menu-card-info">
+                        <div class="menu-card-top">
+                            <div class="menu-card-name">Classic Espresso</div>
+                            <div class="menu-card-price">$4.50</div>
+                        </div>
+                        <div class="menu-card-desc">Rich, bold, and perfectly pulled from our Italian machine. A timeless classic.</div>
+                        <div class="menu-card-tags">
+                            <span class="menu-tag">Strong</span>
+                            <span class="menu-tag">Classic</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card fade-in" data-category="coffee">
+                    <div class="menu-card-icon">🥛</div>
+                    <div class="menu-card-info">
+                        <div class="menu-card-top">
+                            <div class="menu-card-name">Caramel Latte</div>
+                            <div class="menu-card-price">$5.99</div>
+                        </div>
+                        <div class="menu-card-desc">Silky steamed milk meets espresso with a swirl of house-made caramel.</div>
+                        <div class="menu-card-tags">
+                            <span class="menu-tag">Sweet</span>
+                            <span class="menu-tag">Popular</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card fade-in" data-category="coffee">
+                    <div class="menu-card-icon">🧊</div>
+                    <div class="menu-card-info">
+                        <div class="menu-card-top">
+                            <div class="menu-card-name">Cold Brew</div>
+                            <div class="menu-card-price">$5.50</div>
+                        </div>
+                        <div class="menu-card-desc">Smooth, slow-steeped for 20 hours. Refreshingly bold with low acidity.</div>
+                        <div class="menu-card-tags">
+                            <span class="menu-tag">Refreshing</span>
+                            <span class="menu-tag">Smooth</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card fade-in" data-category="coffee">
+                    <div class="menu-card-icon">🎨</div>
+                    <div class="menu-card-info">
+                        <div class="menu-card-top">
+                            <div class="menu-card-name">Cappuccino Art</div>
+                            <div class="menu-card-price">$5.25</div>
+                        </div>
+                        <div class="menu-card-desc">Creamy, frothy perfection with beautiful latte art in every cup.</div>
+                        <div class="menu-card-tags">
+                            <span class="menu-tag">Creamy</span>
+                            <span class="menu-tag">Artisan</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card fade-in" data-category="coffee">
+                    <div class="menu-card-icon">🍫</div>
+                    <div class="menu-card-info">
+                        <div class="menu-card-top">
+                            <div class="menu-card-name">Mocha Delight</div>
+                            <div class="menu-card-price">$6.25</div>
+                        </div>
+                        <div class="menu-card-desc">The perfect marriage of rich chocolate and premium espresso, topped with cream.</div>
+                        <div class="menu-card-tags">
+                            <span class="menu-tag">Chocolate</span>
+                            <span class="menu-tag">Indulgent</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card fade-in" data-category="coffee">
+                    <div class="menu-card-icon">🌰</div>
+                    <div class="menu-card-info">
+                        <div class="menu-card-top">
+                            <div class="menu-card-name">Hazelnut Macchiato</div>
+                            <div class="menu-card-price">$5.75</div>
+                        </div>
+                        <div class="menu-card-desc">Espresso layered with vanilla milk and a drizzle of toasted hazelnut syrup.</div>
+                        <div class="menu-card-tags">
+                            <span class="menu-tag">Nutty</span>
+                            <span class="menu-tag">Layered</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tea Items -->
+                <div class="menu-card fade-in" data-category="tea">
+                    <div class="menu-card-icon">🍵</div>
+                    <div class="menu-card-info">
+                        <div class="menu-card-top">
+                            <div class="menu-card-name">Matcha Zen Latte</div>
+                            <div class="menu-card-price">$5.50</div>
+                        </div>
+                        <div class="menu-card-desc">Ceremonial grade matcha whisked with oat milk for a calming, earthy drink.</div>
+                        <div class="menu-card-tags">
+                            <span class="menu-tag">Healthy</span>
+                            <span class="menu-tag">Organic</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card fade-in" data-category="tea">
+                    <div class="menu-card-icon">🫖</div>
+                    <div class="menu-card-info">
+                        <div class="menu-card-top">
+                            <div class="menu-card-name">Chai Spice</div>
+                            <div class="menu-card-price">$4.99</div>
+                        </div>
+                        <div class="menu-card-desc">Traditional masala chai with aromatic spices and creamy steamed milk.</div>
+                        <div class="menu-card-tags">
+                            <span class="menu-tag">Spicy</span>
+                            <span class="menu-tag">Warm</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Food Items -->
+                <div class="menu-card fade-in" data-category="food">
+                    <div class="menu-card-icon">🥐</div>
+                    <div class="menu-card-info">
+                        <div class="menu-card-top">
+                            <div class="menu-card-name">Butter Croissant</div>
+                            <div class="menu-card-price">$4.25</div>
+                        </div>
+                        <div class="menu-card-desc">Flaky, golden, and baked fresh every morning with French butter.</div>
+                        <div class="menu-card-tags">
+                            <span class="menu-tag">Fresh</span>
+                            <span class="menu-tag">Bakery</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card fade-in" data-category="food">
+                    <div class="menu-card-icon">🥑</div>
+                    <div class="menu-card-info">
+                        <div class="menu-card-top">
+                            <div class="menu-card-name">Avocado Toast</div>
+                            <div class="menu-card-price">$8.99</div>
+                        </div>
+                        <div class="menu-card-desc">Sourdough toast topped with smashed avocado, chili flakes, and poached egg.</div>
+                        <div class="menu-card-tags">
+                            <span class="menu-tag">Healthy</span>
+                            <span class="menu-tag">Brunch</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card fade-in" data-category="food">
+                    <div class="menu-card-icon">🥪</div>
+                    <div class="menu-card-info">
+                        <div class="menu-card-top">
+                            <div class="menu-card-name">Club Panini</div>
+                            <div class="menu-card-price">$9.50</div>
+                        </div>
+                        <div class="menu-card-desc">Grilled panini with turkey, Swiss cheese, tomato, and pesto aioli.</div>
+                        <div class="menu-card-tags">
+                            <span class="menu-tag">Savory</span>
+                            <span class="menu-tag">Lunch</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dessert Items -->
+                <div class="menu-card fade-in" data-category="dessert">
+                    <div class="menu-card-icon">🍰</div>
+                    <div class="menu-card-info">
+                        <div class="menu-card-top">
+                            <div class="menu-card-name">Tiramisu</div>
+                            <div class="menu-card-price">$7.50</div>
+                        </div>
+                        <div class="menu-card-desc">Classic Italian dessert layered with mascarpone, espresso, and cocoa.</div>
+                        <div class="menu-card-tags">
+                            <span class="menu-tag">Italian</span>
+                            <span class="menu-tag">Signature</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card fade-in" data-category="dessert">
+                    <div class="menu-card-icon">🍪</div>
+                    <div class="menu-card-info">
+                        <div class="menu-card-top">
+                            <div class="menu-card-name">Choco Chip Cookie</div>
+                            <div class="menu-card-price">$3.50</div>
+                        </div>
+                        <div class="menu-card-desc">Warm, gooey, and loaded with premium dark chocolate chunks.</div>
+                        <div class="menu-card-tags">
+                            <span class="menu-tag">Warm</span>
+                            <span class="menu-tag">Sweet</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-card fade-in" data-category="dessert">
+                    <div class="menu-card-icon">🧁</div>
+                    <div class="menu-card-info">
+                        <div class="menu-card-top">
+                            <div class="menu-card-name">Red Velvet Cupcake</div>
+                            <div class="menu-card-price">$4.99</div>
+                        </div>
+                        <div class="menu-card-desc">Moist red velvet topped with whipped cream cheese frosting.</div>
+                        <div class="menu-card-tags">
+                            <span class="menu-tag">Decadent</span>
+                            <span class="menu-tag">Popular</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Specials Section -->
+    <section class="specials" id="specials">
+        <div class="section-container">
+            <div class="section-header fade-in">
+                <div class="section-tag" style="color: var(--accent);">Why Choose Us</div>
+                <h2 class="section-title">What Makes Us Special</h2>
+                <div class="divider"></div>
+                <p class="section-desc">Experience the Prit's Café difference — from our beans to our baristas, everything is exceptional.</p>
+            </div>
+
+            <div class="specials-grid">
+                <div class="special-card fade-in">
+                    <div class="special-icon"><i class="fas fa-seedling"></i></div>
+                    <h3>Farm to Cup</h3>
+                    <p>We partner directly with farmers in Colombia, Ethiopia, and Guatemala for the freshest, most ethically sourced beans.</p>
+                    <div class="special-price">100% <small>Organic</small></div>
+                </div>
+                <div class="special-card fade-in">
+                    <div class="special-icon"><i class="fas fa-fire"></i></div>
+                    <h3>Fresh Roasted</h3>
+                    <p>Every batch is roasted in-house daily. You'll taste the difference freshness makes in every single sip.</p>
+                    <div class="special-price">Daily <small>Roasting</small></div>
+                </div>
+                <div class="special-card fade-in">
+                    <div class="special-icon"><i class="fas fa-heart"></i></div>
+                    <h3>Made With Love</h3>
+                    <p>Our baristas are trained artisans who pour their heart into every cup. It's more than coffee — it's an experience.</p>
+                    <div class="special-price">5 Star <small>Service</small></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery" id="gallery">
+        <div class="section-container">
+            <div class="section-header fade-in">
+                <div class="section-tag">Inside Prit's Café</div>
+                <h2 class="section-title">Our Gallery</h2>
+                <div class="divider"></div>
+                <p class="section-desc">A glimpse into the warm, inviting atmosphere of Prit's Café.</p>
+            </div>
+            <div class="gallery-grid fade-in">
+                <div class="gallery-item">
+                    <i class="fas fa-coffee"></i>
+                    <div class="gallery-overlay"><span>Latte Art Mastery</span></div>
+                </div>
+                <div class="gallery-item">
+                    <i class="fas fa-store"></i>
+                    <div class="gallery-overlay"><span>Cozy Interior</span></div>
+                </div>
+                <div class="gallery-item">
+                    <i class="fas fa-bread-slice"></i>
+                    <div class="gallery-overlay"><span>Fresh Pastries</span></div>
+                </div>
+                <div class="gallery-item">
+                    <i class="fas fa-users"></i>
+                    <div class="gallery-overlay"><span>Our Community</span></div>
+                </div>
+                <div class="gallery-item">
+                    <i class="fas fa-mortar-pestle"></i>
+                    <div class="gallery-overlay"><span>Bean Grinding</span></div>
+                </div>
+                <div class="gallery-item">
+                    <i class="fas fa-mug-saucer"></i>
+                    <div class="gallery-overlay"><span>Signature Brews</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" id="testimonials">
+        <div class="section-container">
+            <div class="section-header fade-in">
+                <div class="section-tag">What People Say</div>
+                <h2 class="section-title">Customer Love</h2>
+                <div class="divider"></div>
+                <p class="section-desc">Don't just take our word for it — hear what our beloved regulars have to say.</p>
+            </div>
+            <div class="testimonials-slider">
+                <div class="testimonial-card fade-in">
+                    <div class="testimonial-quote">"</div>
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">The best café I've ever been to! The caramel latte is absolutely divine, and the ambiance makes you want to stay forever. Prit has created something truly magical.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">S</div>
+                        <div>
+                            <div class="testimonial-name">Sarah Mitchell</div>
+                            <div class="testimonial-role">Food Blogger</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card fade-in">
+                    <div class="testimonial-quote">"</div>
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">I've traveled the world tasting coffee, and Prit's Café ranks in my top 3. The cold brew is phenomenal, and their tiramisu is the best I've had outside Italy!</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">J</div>
+                        <div>
+                            <div class="testimonial-name">James Rodriguez</div>
+                            <div class="testimonial-role">Coffee Connoisseur</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card fade-in">
+                    <div class="testimonial-quote">"</div>
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">My go-to spot for weekend brunch! The avocado toast paired with a matcha latte is perfection. The staff always remembers my order. Love this place!</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">E</div>
+                        <div>
+                            <div class="testimonial-name">Emily Chen</div>
+                            <div class="testimonial-role">Regular Customer</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="section-container">
+            <div class="section-header fade-in">
+                <div class="section-tag">Get In Touch</div>
+                <h2 class="section-title">Visit Us or Say Hello</h2>
+                <div class="divider"></div>
+                <p class="section-desc">We'd love to hear from you. Reserve a table, ask a question, or just stop by!</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info fade-in">
+                    <h3>Let's Connect</h3>
+                    <p>Whether you want to reserve a cozy corner table, inquire about our catering services, or simply chat about coffee — we're all ears!</p>
+                    
+                    <div class="contact-detail">
+                        <div class="contact-detail-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div>
+                            <h4>Our Location</h4>
+                            <p>142 Brew Street, Coffee Lane<br>New York, NY 10012</p>
+                        </div>
+                    </div>
+                    <div class="contact-detail">
+                        <div class="contact-detail-icon"><i class="fas fa-phone-alt"></i></div>
+                        <div>
+                            <h4>Call Us</h4>
+                            <p>+1 (555) 123-4567<br>+1 (555) 987-6543</p>
+                        </div>
+                    </div>
+                    <div class="contact-detail">
+                        <div class="contact-detail-icon"><i class="fas fa-envelope"></i></div>
+                        <div>
+                            <h4>Email Us</h4>
+                            <p>hello@pritscafe.com<br>reservations@pritscafe.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-detail">
+                        <div class="contact-detail-icon"><i class="fas fa-clock"></i></div>
+                        <div>
+                            <h4>Opening Hours</h4>
+                            <p>Mon - Fri: 7:00 AM - 10:00 PM<br>Sat - Sun: 8:00 AM - 11:00 PM</p>
+                        </div>
+                    </div>
+                    <div class="contact-social">
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div class="contact-form fade-in">
+                    <h3>Reserve a Table</h3>
+                    <form id="reservationForm" onsubmit="handleSubmit(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Your Name</label>
+                                <input type="text" placeholder="John Doe" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <input type="email" placeholder="john@email.com" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <input type="tel" placeholder="+1 (555) 000-0000">
+                            </div>
+                            <div class="form-group">
+                                <label>Number of Guests</label>
+                                <select>
+                                    <option>1 - 2 Guests</option>
+                                    <option>3 - 4 Guests</option>
+                                    <option>5 - 6 Guests</option>
+                                    <option>7+ Guests</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Preferred Date</label>
+                                <input type="date" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Preferred Time</label>
+                                <input type="time" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Special Requests</label>
+                            <textarea placeholder="Any special requirements or preferences..."></textarea>
+                        </div>
+                        <button type="submit" class="form-submit">
+                            <i class="fas fa-calendar-check"></i> Reserve My Table
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="section-container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <a href="#" class="logo">
+                        <div class="logo-icon"><i class="fas fa-mug-hot"></i></div>
+                        <div class="logo-text">Prit's <span>Café</span></div>
+                    </a>
+                    <p>Where every sip tells a story. Prit's Café is more than a coffee shop — it's a community, a haven, and a celebration of the art of coffee making since 2009.</p>
+                    <div class="contact-social">
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#menu">Our Menu</a></li>
+                        <li><a href="#specials">Specials</a></li>
+                        <li><a href="#gallery">Gallery</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Opening Hours</h4>
+                    <ul class="footer-hours">
+                        <li><span>Monday - Friday</span><span>7AM - 10PM</span></li>
+                        <li><span>Saturday</span><span>8AM - 11PM</span></li>
+                        <li><span>Sunday</span><span>8AM - 9PM</span></li>
+                        <li><span>Holidays</span><span>9AM - 6PM</span></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Newsletter</h4>
+                    <p style="color: rgba(255,255,255,0.5); font-size: 14px; margin-bottom: 20px; line-height: 1.7;">Subscribe to get updates on new blends, seasonal specials, and exclusive offers!</p>
+                    <div class="footer-newsletter">
+                        <input type="email" placeholder="Your email address">
+                        <button onclick="subscribeNewsletter()">Subscribe <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 Prit's Café. All rights reserved. Brewed with <i class="fas fa-heart" style="color: var(--accent);"></i> and great coffee.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDuration = (Math.random() * 8 + 6) + 's';
+                particle.style.animationDelay = Math.random() * 10 + 's';
+                particle.style.width = (Math.random() * 4 + 2) + 'px';
+                particle.style.height = particle.style.width;
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            const backToTop = document.getElementById('backToTop');
+
+            if (window.scrollY > 80) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+
+            if (window.scrollY > 500) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        // Mobile menu
+        function toggleMenu() {
+            const hamburger = document.getElementById('hamburger');
+            const mobileMenu = document.getElementById('mobileMenu');
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        }
+
+        function closeMenu() {
+            const hamburger = document.getElementById('hamburger');
+            const mobileMenu = document.getElementById('mobileMenu');
+            hamburger.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Menu filter
+        function filterMenu(category) {
+            const buttons = document.querySelectorAll('.menu-cat-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const cards = document.querySelectorAll('.menu-card');
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'flex';
+                    card.style.animation = 'fadeInUp 0.5s ease forwards';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Counter animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const duration = 2000;
+                const step = target / (duration / 16);
+                let current = 0;
+
+                const updateCounter = () => {
+                    current += step;
+                    if (current < target) {
+                        counter.textContent = Math.ceil(current).toLocaleString() + '+';
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target.toLocaleString() + '+';
+                    }
+                };
+                updateCounter();
+            });
+        }
+
+        // Intersection Observer for animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Trigger counter animation when hero is visible
+        let counterStarted = false;
+        const heroObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !counterStarted) {
+                    counterStarted = true;
+                    setTimeout(animateCounters, 500);
+                }
+            });
+        }, { threshold: 0.5 });
+        heroObserver.observe(document.querySelector('.hero'));
+
+        // Form submission
+        function handleSubmit(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('.form-submit');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check-circle"></i> Table Reserved!';
+            btn.style.background = '#2ecc71';
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.style.background = '';
+                e.target.reset();
+            }, 3000);
+        }
+
+        // Newsletter subscription
+        function subscribeNewsletter() {
+            const input = document.querySelector('.footer-newsletter input');
+            const btn = document.querySelector('.footer-newsletter button');
+            if (input.value) {
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '✓ Subscribed!';
+                input.value = '';
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                }, 3000);
+            }
+        }
+
+        // Smooth appearance for fadeInUp animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInUp {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
